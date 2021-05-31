@@ -20,8 +20,8 @@ example:
         - name: "boot"
           size: "40"
       ansible_python_interpreter: /usr/libexec/platform-python
-      #virt_infra_disk_cmd:
-      #  - uname -a
+      virt_infra_disk_cmd:
+        - 'timedatectl set-timezone Europe/Rome'
       virt_infra_networks:
         - name: "osp"
         - name: "osp2"
