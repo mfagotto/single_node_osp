@@ -1,0 +1,118 @@
+--- 
+- name: deploy OSP all-in-one
+  hosts: osp
+  become: true 
+
+  vars: 
+    initialize_repo: true
+  
+  vars_files:
+    - rhn.yml
+    - vars.yml
+
+  tasks:
+    - name: Register as user ({{rhn_user}})
+      redhat_subscription:
+        state: present
+        username: "{{ rhn_user }}"
+        password: "{{ rhn_password }}"
+        auto_attach: true 
+        pool_ids: '{{ pool_id }}'
+
+    - name: ensure user stack  is present
+      user:
+        name: stack
+        state: present
+        password: '{{ stack_password }}'
+
+    - name: ensure sudo rules for stack are present
+      copy:
+        content: "stack ALL=(root) NOPASSWD:ALL"
+        dest: /etc/sudoers.d/stack
+        mode: 0440
+        owner: root
+        group: root
+
+    #- name: ensure to fix release 8.2
+    #  command: "subscription-manager release --set=8.2"
+
+    - name: install dnf-utils
+      yum: 
+        name: dnf-utils
+        state: latest
+    - name: Initializing repository subscription
+      block:
+        - name: Disable all RHSM repositories
+          rhsm_repository:
+            name: '*'
+            state: disabled 
+    
+        - name: enable the right repos
+          rhsm_repository:
+            name: 
+              - rhel-8-for-x86_64-baseos-rpms
+              - rhel-8-for-x86_64-appstream-rpms
+              - rhel-8-for-x86_64-highavailability-rpms
+              - ansible-2.9-for-rhel-8-x86_64-rpms
+              - openstack-16.1-for-rhel-8-x86_64-rpms 
+              - fast-datapath-for-rhel-8-x86_64-rpms
+              - advanced-virt-for-rhel-8-x86_64-rpms 
+            state: enabled
+      when: initialize_repo|bool
+
+    - name: set right appstream state
+      command: "{{ item }}"
+      loop:
+        - dnf module disable -y container-tools:rhel8
+        - dnf module enable -y container-tools:2.0
+        - dnf module disable -y virt:rhel
+        - dnf module enable -y virt:8.2
+
+    - name: update all packages
+      yum: 
+        name: "*"
+        state: latest 
+      register: pkgupdate
+    
+    - name: rebooting
+      reboot:
+      when: pkgupdate.changed
+
+    - name: ensure python3-tripleoclient is present
+      yum:
+        name: python3-tripleoclient
+        state: present
+     
+    - name: deploy installation containers-prepare-parameters
+      template:
+        src: template-containers-prepare-parameters.yaml
+        dest: "{{ osp_standalone_home_dir }}/containers-prepare-parameters.yaml"
+        owner: "{{ osp_deployment_user }}"
+        group: "{{ osp_deployment_user }}"
+
+    - name: deploy installation standalone-parameters.yaml
+      template:
+        src: template-standalone-parameters.yaml
+        dest: "{{ osp_standalone_home_dir }}/standalone_parameters.yaml"
+        owner: "{{ osp_deployment_user }}"
+        group: "{{ osp_deployment_user }}"
+
+
+    - name: login podman to registry.redhat.io
+      command: podman login registry.redhat.io --username "{{ rhn_user }}" --password "{{ rhn_password }}" 
+    - name: set hostname
+      hostname:
+        name: "{{ osp_domainname }}"
+
+   # - name: exec deployment
+   #   shell: |
+   #     openstack tripleo deploy \
+   #     --templates \
+   #     --local-ip={{ osp_ip }}/24 \
+   #     -e /usr/share/openstack-tripleo-heat-templates/environments/standalone/standalone-tripleo.yaml \
+   #     -r /usr/share/openstack-tripleo-heat-templates/roles/Standalone.yaml \
+   #     -e {{ osp_standalone_home_dir }}/containers-prepare-parameters.yaml \
+   #     -e {{ osp_standalone_home_dir }}/standalone_parameters.yaml \
+   #     --output-dir {{ osp_standalone_home_dir }} \
+   #     --standalone
+    

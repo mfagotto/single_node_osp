@@ -1,0 +1,19 @@
+parameter_defaults:
+  CloudName: {{ osp_ip }}
+  CloudDomain: <DOMAIN_NAME>
+  ControlPlaneStaticRoutes: []
+  Debug: true
+  DeploymentUser: {{ osp_deployment_user }}
+  DnsServers:
+    - {{ osp_dns1 }}
+    - {{ osp_dns2 }}
+  NeutronPublicInterface: {{ osp_neutron_public_interface }}
+  NeutronDnsDomain: localdomain
+  NeutronBridgeMappings: datacentre:br-ctlplane
+  NeutronPhysicalBridge: br-ctlplane
+  StandaloneEnableRoutedNetworks: false
+  StandaloneHomeDir: {{ osp_standalone_home_dir }}
+  StandaloneLocalMtu: 1500
+  StandaloneExtraConfig:
+    NovaComputeLibvirtType: qemu
+# OctaviaAmphoraSshKeyFile: "/home/stack/.ssh/id_rsa.pub"

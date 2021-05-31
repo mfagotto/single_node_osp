@@ -1,0 +1,4 @@
+rhn_user: '[RHN_USERNAME]'
+rhn_password: '[RHN_PASSOWRD]'
+pool_id: '[POOL ID REFERRING TO OPENSTACK]'
+stack_password: '[STACK USER PASSWORD]'

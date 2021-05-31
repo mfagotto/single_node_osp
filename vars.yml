@@ -1,0 +1,8 @@
+osp_ip: "{{ ansible_eth1.ipv4.address }}" 
+osp_domainname: osp.localdomain
+osp_deployment_user: stack
+osp_dns1: 1.1.1.1
+osp_dns2: 8.8.8.8
+osp_neutron_public_interface: eth1
+osp_standalone_home_dir: /home/{{ osp_deployment_user }}
+

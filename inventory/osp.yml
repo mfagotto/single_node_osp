@@ -1,0 +1,28 @@
+---
+## YAML based inventory, see:
+## https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+#
+# Example using mix of distros
+# Overriding some defaults at hostgroup and individual guest levels
+# Note that the virt_infra_variant are not set to specific versions,
+# this is to make it work on different hosts
+# Note also that CentOS 8 needs the path to system Python
+example:
+  hosts:
+    osp:
+      virt_infra_state: running
+      virt_infra_variant: rhel8.2
+      virt_infra_distro_image: rhel-8.2-x86_64-kvm.qcow2
+      virt_infra_timezone: "Europe/Rome"
+      virt_infra_ram: 16000
+      virt_infra_cpus: 8
+      virt_infra_disks:
+        - name: "boot"
+          size: "40"
+      ansible_python_interpreter: /usr/libexec/platform-python
+      #virt_infra_disk_cmd:
+      #  - uname -a
+      virt_infra_networks:
+        - name: "osp"
+        - name: "osp2"
+        
