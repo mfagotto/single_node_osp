@@ -11,6 +11,7 @@ example:
   hosts:
     osp:
       virt_infra_state: running
+      virt_infra_host_image_path: "/var/lib/libvirt/images"
       virt_infra_variant: rhel8.2
       virt_infra_distro_image: rhel-8.2-x86_64-kvm.qcow2
       virt_infra_timezone: "Europe/Rome"

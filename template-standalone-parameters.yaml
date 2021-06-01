@@ -1,6 +1,6 @@
 parameter_defaults:
   CloudName: {{ osp_ip }}
-  CloudDomain: localdomain
+  CloudDomain: {{ osp_domainname }}
   ControlPlaneStaticRoutes: []
   Debug: true
   DeploymentUser: {{ osp_deployment_user }}
