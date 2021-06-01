@@ -104,15 +104,19 @@
       hostname:
         name: "{{ osp_domainname }}"
 
-   # - name: exec deployment
-   #   shell: |
-   #     openstack tripleo deploy \
-   #     --templates \
-   #     --local-ip={{ osp_ip }}/24 \
-   #     -e /usr/share/openstack-tripleo-heat-templates/environments/standalone/standalone-tripleo.yaml \
-   #     -r /usr/share/openstack-tripleo-heat-templates/roles/Standalone.yaml \
-   #     -e {{ osp_standalone_home_dir }}/containers-prepare-parameters.yaml \
-   #     -e {{ osp_standalone_home_dir }}/standalone_parameters.yaml \
-   #     --output-dir {{ osp_standalone_home_dir }} \
-   #     --standalone
+    - name: dump exec deployment command
+      debug: 
+        msg: "
+        openstack tripleo deploy \
+        --templates \
+        --local-ip={{ osp_ip }}/24 \
+        -e /usr/share/openstack-tripleo-heat-templates/environments/standalone/standalone-tripleo.yaml \
+        -r /usr/share/openstack-tripleo-heat-templates/roles/Standalone.yaml \
+        -e {{ osp_standalone_home_dir }}/containers-prepare-parameters.yaml \
+        -e {{ osp_standalone_home_dir }}/standalone_parameters.yaml \
+        --output-dir {{ osp_standalone_home_dir }} \
+        --standalone
+        "
     
+    #- name: exec deployment
+      #shell: |
