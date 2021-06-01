@@ -25,14 +25,14 @@ proceed to the vault creation using the following
   
 as an alternative, the `rhn.yml.sample` can be used as a draft 
 
-## CUSTOMIZE
+## Customize
 - inventory/kvmhost.yml: set newtworks names and ranges
 - inventory/osp.yml: set hostname, cpu disk, 
 
-## DEPLOY
+## Deploy
 ./install.sh
 
-## DESTROY
+## Destroy
 ansible-playbook --limit=kvmhost,osp virt-infra.yml -e "virt_infra_state=undefined" --ask-become-pass
 
 
