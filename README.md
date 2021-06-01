@@ -27,7 +27,7 @@ as an alternative, the `rhn.yml.sample` can be used as a draft
 
 ## Customize
 - inventory/kvmhost.yml: set newtworks names and ranges
-- inventory/osp.yml: set hostname, cpu disk, 
+- inventory/osp.yml: set hostname, cpu, ram, disks,  and NICs. consider that your system must have at least 4 CPUs, 8GB RAM, and 30GB disk space and two interfaces (default and management)
 
 ## Deploy
 ./install.sh
