@@ -12,17 +12,17 @@ Ansible 2.9+ must be installed on the system.
 
 ### Vault file
 setup the vault file rhn.yml with the following vars: 
-`rhn_user: '[RHN_USERNAME]'
-rhn_password: '[RHN_PASSOWRD]'
-pool_id: '[POOL ID REFERRING TO OPENSTACK]'
-stack_password: '[STACK USER PASSWORD]'
-`
+`rhn_user: '[RHN_USERNAME]'  
+rhn_password: '[RHN_PASSOWRD]'  
+pool_id: '[POOL ID REFERRING TO OPENSTACK]'  
+stack_password: '[STACK USER PASSWORD]'  
+`  
 in order to generate the password for the stack user user for example the following command: 
-`mkpasswd --method=sha-512`
-
-proceed to the vault creation using the following 
-`ansible-vault create rhn.yml`
-
-as an alternative, the `rhn.yml.sample` can be used as a draft
+`mkpasswd --method=sha-512`  
+  
+proceed to the vault creation using the following  
+`ansible-vault create rhn.yml`  
+  
+as an alternative, the `rhn.yml.sample` can be used as a draft  
 
 
