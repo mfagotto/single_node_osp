@@ -68,15 +68,15 @@
         - dnf module disable -y virt:rhel
         - dnf module enable -y virt:8.2
 
-    - name: update all packages
-      yum: 
-        name: "*"
-        state: latest 
-      register: pkgupdate
-    
-    - name: rebooting
-      reboot:
-      when: pkgupdate.changed
+    #- name: update all packages
+    #  yum: 
+    #    name: "*"
+    #    state: latest 
+    #  register: pkgupdate
+   # 
+   # - name: rebooting
+   #   reboot:
+   #   when: pkgupdate.changed
 
     - name: ensure python3-tripleoclient is present
       yum:

@@ -14,7 +14,7 @@ example:
       virt_infra_host_image_path: "/var/lib/libvirt/images"
       virt_infra_variant: rhel8.2
       virt_infra_distro_image: rhel-8.2-x86_64-kvm.qcow2
-      virt_infra_timezone: "Europe/Rome"
+      virt_infra_timezone: "UTC"
       virt_infra_ram: 16000
       virt_infra_cpus: 8
       virt_infra_disks:
