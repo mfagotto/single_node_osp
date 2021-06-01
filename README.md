@@ -26,8 +26,8 @@ proceed to the vault creation using the following
 as an alternative, the `rhn.yml.sample` can be used as a draft 
 
 ## CUSTOMIZE
-inventory/kvmhost.yml: set newtworks names and ranges
-inventory/osp.yml: set hostname, cpu disk, 
+- inventory/kvmhost.yml: set newtworks names and ranges
+- inventory/osp.yml: set hostname, cpu disk, 
 
 ## DEPLOY
 ./install.sh
