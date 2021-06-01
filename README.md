@@ -30,9 +30,11 @@ as an alternative, the `rhn.yml.sample` can be used as a draft
 - inventory/osp.yml: set hostname, cpu, ram, disks,  and NICs. consider that your system must have at least 4 CPUs, 8GB RAM, and 30GB disk space and two interfaces (default and management)
 
 ## Deploy
+Execute the following script to install the lab:
 ./install.sh
 
 ## Destroy
-ansible-playbook --limit=kvmhost,osp virt-infra.yml -e "virt_infra_state=undefined" --ask-become-pass
+Execute the following script to destroy the lab:
+./destroy.sh
 
 
