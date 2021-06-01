@@ -9,7 +9,8 @@ Given a box, RHN access and a poolid providing access to openstack repositories 
 
 ## Prerequisites
 Ansible 2.9+ must be installed on the system.
-Red Hat Enterprise Linux 8.2 QCOW2 Image - rhel-8.2-x86_64-kvm.qcow2 - must be available in the default pool folder
+Red Hat Enterprise Linux 8.2 QCOW2 Image - rhel-8.2-x86_64-kvm.qcow2 - must be available in the default pool folder /var/lib/libvirt/images. This path may be customized adjusting the  following variable:
+virt_infra_host_image_path: "/var/lib/libvirt/images"
 
 ### Vault file
 setup the vault file rhn.yml with the following vars: 
