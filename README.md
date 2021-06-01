@@ -23,6 +23,16 @@ in order to generate the password for the stack user user for example the follow
 proceed to the vault creation using the following  
 `ansible-vault create rhn.yml`  
   
-as an alternative, the `rhn.yml.sample` can be used as a draft  
+as an alternative, the `rhn.yml.sample` can be used as a draft 
+
+# CUSTOMIZE
+inventory/kvmhost.yml: set newtworks names and ranges
+inventory/osp.yml: set hostname, cpu disk, 
+
+# DEPLOY
+./install.sh
+
+# DESTROY
+ansible-playbook --limit=kvmhost,osp virt-infra.yml -e "virt_infra_state=undefined" --ask-become-pass
 
 
