@@ -33,8 +33,8 @@
         owner: root
         group: root
 
-    #- name: ensure to fix release 8.2
-    #  command: "subscription-manager release --set=8.2"
+    - name: ensure to fix release 8.2
+      command: "subscription-manager release --set=8.2"
 
     - name: install dnf-utils
       yum: 
@@ -50,9 +50,9 @@
         - name: enable the right repos
           rhsm_repository:
             name: 
-              - rhel-8-for-x86_64-baseos-rpms
-              - rhel-8-for-x86_64-appstream-rpms
-              - rhel-8-for-x86_64-highavailability-rpms
+              - rhel-8-for-x86_64-baseos-eus-rpms
+              - rhel-8-for-x86_64-appstream-eus-rpms
+              - rhel-8-for-x86_64-highavailability-eus-rpms
               - ansible-2.9-for-rhel-8-x86_64-rpms
               - openstack-16.1-for-rhel-8-x86_64-rpms 
               - fast-datapath-for-rhel-8-x86_64-rpms
@@ -68,15 +68,15 @@
         - dnf module disable -y virt:rhel
         - dnf module enable -y virt:8.2
 
-    #- name: update all packages
-    #  yum: 
-    #    name: "*"
-    #    state: latest 
-    #  register: pkgupdate
-   # 
-   # - name: rebooting
-   #   reboot:
-   #   when: pkgupdate.changed
+    - name: update all packages
+      yum: 
+        name: "*"
+        state: latest 
+      register: pkgupdate
+    
+    - name: rebooting
+      reboot:
+      when: pkgupdate.changed
 
     - name: ensure python3-tripleoclient is present
       yum:
@@ -118,5 +118,15 @@
         --standalone
         "
     
-    #- name: exec deployment
-      #shell: |
+    - name: exec deployment
+      shell: |
+        openstack tripleo deploy \
+        --templates \
+        --local-ip={{ osp_ip }}/24 \
+        -e /usr/share/openstack-tripleo-heat-templates/environments/standalone/standalone-tripleo.yaml \
+        -r /usr/share/openstack-tripleo-heat-templates/roles/Standalone.yaml \
+        -e {{ osp_standalone_home_dir }}/containers-prepare-parameters.yaml \
+        -e {{ osp_standalone_home_dir }}/standalone_parameters.yaml \
+        --output-dir {{ osp_standalone_home_dir }} \
+        --standalone
+
